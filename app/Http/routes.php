@@ -4,6 +4,7 @@ use App\Post;
 use App\User;
 use App\Role;
 use App\Country;
+use App\Tag;
 
 /*
 |--------------------------------------------------------------------------
@@ -242,4 +243,25 @@ Route::get('post/{postid}/photos', function($postid) {
     foreach ($post->photos as $photo) {
         echo $photo->path . "<br>\n";
     }
+});
+
+Route::get('post/{postid}/tags', function($postid) {
+    $post = Post::find($postid);
+    echo "Post:" . $post->title . "<br>\n";
+
+    echo "Tag: ";
+    foreach ($post->tags as $tag) {
+        echo $tag->name . ", ";
+    }
+});
+
+Route::get('tag/{tagid}/posts', function($tagid) {
+    $tag = Tag::find($tagid);
+    echo "Tag:" . $tag->name . "<br>\n";
+
+    echo "<ol>";
+    foreach ($tag->posts as $post) {
+        echo "<li>" . $post->title . "</li>";
+    }
+    echo "</ol>";
 });
